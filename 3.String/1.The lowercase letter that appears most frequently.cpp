@@ -14,24 +14,20 @@ b
 #include <cstring>
 using namespace std;
 int main() {
-    char str[101];
-    cin >> str;
-    
-    int count[26] = {0}; // 统计每个小写字母出现的次数
-    int maxCount = 0; // 最大出现次数
-    char result = 'a'; // 最终结果，初始为'a'
-    
+	string str;
+    cin>>str;
+    int count[26] = {0,};
+    char letter = '!';
     for (int i = 0; str[i] != '\0'; i++) {
         count[str[i] - 'a']++; // 更新对应字母的计数
     }
-    
-    for (int i = 0; i < 26; i++) {
-        if (count[i] > maxCount || (count[i] == maxCount && (char)(i + 'a') > result)) {
-            maxCount = count[i];
-            result = (char)(i + 'a'); // 更新结果
+    int maxCount = 0; // 最大出现次数
+    for(int j = 0; j < 26; j++){
+        if(count[j] >= maxCount){
+            maxCount = count[j];
+            letter = j + 'a';
         }
     }
-    
-    cout << result << endl; // 输出结果
+    cout<< letter;
     return 0;
 }
