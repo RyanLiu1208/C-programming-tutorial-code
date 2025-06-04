@@ -25,30 +25,44 @@ SSGBBBSBG
 用例输出
 4
 *******************************************/
-#include <iostream>
-#include <string>
+#include<bits/stdc++.h>
 using namespace std;
-
-int main() {
-    int n;
+int main()
+{
+    int n, ans = 0, a1 = 0, a2 = 0, a3 = 0, a4 = 0;
+    char a[1005];
     cin >> n;
-    string str;
-    cin >> str;
-    int countG = 0, countS = 0;
-    for (char c : str) {
-        if (c == 'G') countG++;
-        else if (c == 'S') countS++;
+    // 读入奖牌序列，并统计金牌和银牌数量
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        if (a[i] == 'G')
+            a1++; // 金牌数量
+        else if (a[i] == 'S')
+            a2++; // 银牌数量
     }
-    int wrongG = 0, wrongS = 0;
-    // G区统计非G
-    for (int i = 0; i < countG; i++) {
-        if (str[i] != 'G') wrongG++;
+    // 统计金牌区（前a1个）中不是金牌的奖牌数量
+    for (int i = 0; i < a1; i++)
+    {
+        if (a[i] == 'S' || a[i] == 'B')
+            ans++; // 金牌区内错位的奖牌
+        if (a[i] == 'S')
+            a3++; // 金牌区内的银牌数量
     }
-    // S区统计非S
-    for (int i = countG; i < countG + countS; i++) {
-        if (str[i] != 'S') wrongS++;
+    // 统计银牌区（接下来a2个）中不是银牌的奖牌数量
+    for (int i = a1; i < a1 + a2; i++)
+    {
+        if (a[i] == 'G' || a[i] == 'B')
+            ans++; // 银牌区内错位的奖牌
+        if (a[i] == 'G')
+            a4++; // 银牌区内的金牌数量
     }
-    // 最少交换次数
-    cout << (wrongG + wrongS) / 2 << endl;
+    // 减去金银互换的多余统计部分
+    if (a3 >= a4)
+        ans -= a4;
+    else
+        ans -= a3;
+    // 输出最少交换次数
+    cout << ans << endl;
     return 0;
 }
