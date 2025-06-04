@@ -18,14 +18,19 @@ using namespace std;
 int main() {
     string str;
     getline(cin, str); // 读取字符串
-    string result; // 用于存储处理后的结果
+    string result;
+    bool in_number = false; // 标记是否已经遇到数字
     for (char ch : str) {
-        if (isdigit(ch)) { // 如果当前字符是数字
-            result += ch; // 将其添加到结果字符串中
-        } else if (!result.empty() && result.back() != '*') { // 如果最后一个字符不是 *，且字符串不为空的时候
-            result += '*'; // 如果结果字符串不为空且最后一个字符不是'*'，则添加'*'
+        if (isdigit(ch)) {
+            if (!in_number) { // 第一次遇到数字前加*
+                result += '*';
+                in_number = true;
+            }
+            result += ch;
+        } else {
+            in_number = false;
         }
     }
-    cout << result << endl; // 输出处理后的字符串
+    cout << result << endl;
     return 0;
 }
